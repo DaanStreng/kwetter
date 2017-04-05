@@ -35,6 +35,10 @@ public class User extends Model {
     @Column(nullable = false)
     private String password;
 
+    public List<ApiKey> getKeys() {
+        return keys;
+    }
+
     @OneToMany(mappedBy = "user")
     private List<ApiKey> keys;
 
@@ -47,6 +51,11 @@ public class User extends Model {
     @OneToOne
     private Profile profile;
 
+    public User(){}
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 
     public ApiKey generateKey(){
         if (keys == null){

@@ -20,7 +20,9 @@ public class SubjectDAO extends DaoFacade<Subject> implements ISubjectDAO {
     public SubjectDAO() {
         super(Subject.class);
     }
-
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
     public EntityManager getEntityManager() {
         return em;
     }

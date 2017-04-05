@@ -12,4 +12,6 @@ public interface IUserDAO extends IKwetterDAO<User> {
 
     public User loginUser(String username, String password);
     public User checkApiKey(String apikey);
+    public User createUser(String username, String password);
+
 }

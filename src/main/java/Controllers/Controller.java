@@ -8,7 +8,7 @@ import Services.UserService;
  */
 public class Controller {
     public User checkBegin(UserService userService,String apiKey){
-        User user = userService.getUserDAO().checkApiKey(apiKey);
+        User user = userService.checkApiKey(apiKey);
         return user;
     }
 }

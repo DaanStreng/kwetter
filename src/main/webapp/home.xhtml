@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Daan
+  Date: 29-Mar-17
+  Time: 10:42
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" style="height:100%;">
+
+<h:head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="style.css" ></link>
+    <title>Welkom</title>
+</h:head>
+
+<h:body prependId="false" style="height:100%">
+    <div id="mainContainer" class="pure-g" style="height:100%;">
+        <div class="pure-u-1" style="height:5%"></div>
+        <div class="pure-u-1" style="text-align:center;height:5%;">
+            <img id="profileImage" style="max-height:100%"></img>
+            Welkom #{userBean.user.profile.displayName}
+        </div>
+        <div class="pure-u-1-12"></div>
+        <div class="pure-u-1-4" style="height:85%;">
+            <div class="pure-g" style="height:100%;">
+                <div class="pure-u-1-12"></div>
+                <div class="pure-u-11-12" style="height:100%">
+                    <div class="pure-g" style="height:100%;">
+                        <div class="pure-u-1" style="height:7%">
+                            <h4>Tweets</h4>
+                        </div>
+                        <div class="pure-u-1" style="height:83%;overflow-y:auto">
+                            <div class="pure-g" id="tweetContainer"></div>
+                        </div>
+                        <div class="pure-u-1 pure-form" style="height:10%">
+                            <input type="text" id="tweetInput"/>
+                            <button class="button pure-button-primary pure-button" id="sendTweetButton">Send</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="pure-u-1-12"></div>
+        <div class="pure-u-1-4">
+            <div class="pure-g" style="height:100%;">
+
+                <div class="pure-u-1" style="height:100%">
+                    <div class="pure-g" style="height:100%;">
+                        <div class="pure-u-1" style="height:7%">
+                            <h4>You're following</h4>
+                        </div>
+                        <div class="pure-u-1 pure-form" style="height:10%">
+                            <input placeholder="Find other users" type="search" id="profileFindInput"/>
+                        </div>
+                        <div class="pure-u-1" style="height:83%;overflow-y:auto">
+                            <div class="pure-g" id="profileFindContainer"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div id="profileDialog" class="profile-dialog" style="display:none;">
+                    <div class="pure-g">
+                        <div class="pure-u-1-3">Username:</div>
+                        <div class="pure-u-2-3 username"></div>
+                        <div class="pure-u-1-3">Name:</div>
+                        <div class="pure-u-2-3 name"></div>
+                        <div class="pure-u-1-3">Surname:</div>
+                        <div class="pure-u-2-3 surname"></div>
+                        <div class="pure-u-1">Bio:</div>
+                        <div class="pure-u-1 bio"></div>
+                        <div class="pure-u-1" style="height:5px"></div>
+
+                        <div class="pure-u-1" style="text-align:center">
+                            <div class="button pure-button pure-button-primary follow-button">Follow</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="pure-u-1-12"></div>
+        <div class="pure-u-1-4">
+           <h:panelGroup>
+                <form enctype="multipart/form-data" method="post" prependId="false" id="imageForm">
+                    <div class="pure-u-1">
+                        <input type="file" id="imageInput" name="image"/>
+                    </div>
+                    <button id="saveImageButton">Save</button>
+                </form>
+            </h:panelGroup>
+            <h:panelGroup>
+                <h:form   prependId="false" style="max-width:500px;" class="pure-form pure-form-stacked" action="#{userBean.setProfile}">
+                    <div class="pure-g">
+
+                        <div class="pure-u-1">
+                            <h:inputText id="nameInput" value="#{userBean.profile.name}"></h:inputText>
+                        </div>
+                        <div class="pure-u-1">
+                            <h:inputText id="surnameInput" value="#{userBean.profile.surname}"></h:inputText>
+                        </div>
+                        <div class="pure-u-1">
+                            <h:inputTextarea id="bioInput" value="#{userBean.profile.bio}"></h:inputTextarea>
+                        </div>
+
+                        <div class="pure-u-1">
+                            <h:inputText id="webSiteInput" value="#{userBean.profile.website}"></h:inputText>
+                        </div>
+                        <div class="pure-u-1-2" style="text-align:center;">
+                            <h:commandButton class="pure-button button pure-button-primary" value="Save" action="#{userBean.saveProfile}" />
+                        </div>
+                        <div class="pure-u-1" style="text-align:center;">
+                            <h:outputText style="color:blue;" value="#{userBean.saveMessage}" />
+                        </div>
+
+                    </div>
+                </h:form>
+            </h:panelGroup>
+        </div>
+
+        <script>
+            Date.prototype.makePretty = function() {
+                var mm = this.getMonth() + 1; // getMonth() is zero-based
+                var dd = this.getDate();
+
+                var str = [this.getFullYear(),
+                    (mm>9 ? '' : '0') + mm,
+                    (dd>9 ? '' : '0') + dd
+                ].join('-');
+                str+= " "+this.getHours()+":"+this.getMinutes()+":"+this.getSeconds();
+                return str;
+            };
+            function reloadTweets(){
+                var key = "#{userBean.user.keys[0].keystring}";
+                $.ajax({
+                    url:"/Kwetter/api/tweet/"+key+"/gettweets",
+                    success:function(data){
+                        tweetSucces(data);
+                    }
+                });
+            }
+            function tweetSucces(data){
+                $("#tweetContainer").html(' ');
+                var lastadd = null;
+                data.forEach(function(element){
+                    var adder = $('<div style="" class="tweetElement pure-u-1"></div>');
+                    var cont = $('<div class="pure-g"></div>');
+                    var title = $('<div class="pure-u-1 tweetTitle">@'+element.createdBy.displayName+'</div>');
+                    var time = $('<div class="pure-u-1 tweetTime">'+new Date(element.timestamp).makePretty()+'</div>');
+                    var content = $('<div class="pure-u-1 tweetContent">'+element.message+'</div>');
+                    cont.append(title);
+                    cont.append(content);
+                    console.log(element.timestamp);
+                    cont.append(time);
+                    adder.append(cont);
+                    $("#tweetContainer").append(adder);
+                    lastadd = adder;
+                });
+                lastadd[0].scrollIntoView();
+            }
+            function tweetStream(){
+                var key = "#{userBean.user.keys[0].keystring}";
+                $.ajax({
+                    url:"/Kwetter/api/tweet/"+key+"/tweetstream",
+                    success:function(data){
+                        tweetSucces(data);
+                        tweetStream();
+                    }
+                });
+            }
+            var superImageUrl;
+            $(document).ready(function(){
+                reloadTweets();
+                tweetStream();
+                getFollows();
+
+
+                $.extend( true, jQuery.fn, {
+                    imagePreview: function( options ){
+                        var defaults = {};
+                        if( options ){
+                            $.extend( true, defaults, options );
+                        }
+                        $.each( this, function(){
+                            var $this = $( this );
+                            $this.bind( 'change', function( evt ){
+
+                                var files = evt.target.files; // FileList object
+                                // Loop through the FileList and render image files as thumbnails.
+                                for (var i = 0, f; f = files[i]; i++) {
+                                    // Only process image files.
+                                    if (!f.type.match('image.*')) {
+                                        continue;
+                                    }
+                                    var reader = new FileReader();
+                                    // Closure to capture the file information.
+                                    reader.onload = (function(theFile) {
+                                        return function(e) {
+                                            // Render thumbnail.
+                                            $('#imageURL').attr('src',e.target.result);
+                                            superImageUrl = e.target.result;
+
+                                        };
+                                    })(f);
+                                    // Read in the image file as a data URL.
+                                    reader.readAsDataURL(f);
+                                }
+
+                            });
+                        });
+                    }
+                });
+                $( '#imageInput' ).imagePreview();
+
+
+
+                $("#saveImageButton").click(function(event){
+                    event.preventDefault();
+                    var key = "#{userBean.user.keys[0].keystring}";
+                    var image = superImageUrl;
+                    $.ajax({
+                       type:"post",
+                        url:"/Kwetter/api/profile/"+key+"/setimage",
+                        data:{image:image},
+                        success:function(data){
+                            setImageSource($("#profileImage"),"/Kwetter/api/profile/"+key+"/getimage/#{userBean.profile.id}");
+                        }
+                    });
+                    return false;
+                });
+                $("#surnameInput").attr("placeholder","Your surname");
+                $("#nameInput").attr("placeholder","Your name");
+                $("#bioInput").attr("placeholder","Some info about you");
+                $("#webSiteInput").attr("placeholder","Your website");
+                $("#webSiteInput").attr("type","url");
+                $("#sendTweetButton").keypress(function(e){
+                    if (e.which == 13) {
+                        $(this).trigger('click');
+                    }
+                });
+               $("#sendTweetButton").click(function(){
+                   var key = "#{userBean.user.keys[0].keystring}";
+                  var message = $("#tweetInput").val();
+                  $.ajax({
+                     type:"post",
+                      url:"/Kwetter/api/tweet/"+key+"/addtweet",
+                      data:{message:message},
+                      success:function(data){
+                         $("#tweetInput").val("");
+                         reloadTweets();
+                      }
+                  });
+               });
+
+               $("#profileFindInput").keyup(function(){
+                  var val = $(this).val();
+                  if (!val || val.length==0){
+                      getFollows();
+                  }
+                  else {
+                      var key = "#{userBean.user.keys[0].keystring}";
+                      $("#profileFindContainer").html(' ');
+                      $.ajax({
+                          url: "/Kwetter/api/profile/" + key + "/findprofiles",
+                          data: {query: val},
+                          success: function (data) {
+                              profileSuccess(data);
+                          }
+                      });
+                  }
+               });
+
+
+            });
+
+            function getFollows(){
+                var key = "#{userBean.user.keys[0].keystring}";
+                $("#profileFindContainer").html(' ');
+                $.ajax({
+                    url:"/Kwetter/api/profile/"+key+"/getfollows",
+                    success:function(data){
+                        profileSuccess(data);
+                    }
+                });
+            }
+            function setImageSource(element, url){
+                var key = "#{userBean.user.keys[0].keystring}";
+                $.ajax({
+                   url:url,
+                    success:function(data){
+                       element.attr("src",data);
+                    }
+                });
+
+            }
+
+            function profileSuccess(data){
+                data.forEach(function(element){
+                    var adder = $('<div style="" class="profileElement pure-u-1"></div>');
+                    var cont = $('<div class="pure-g"></div>');
+                    var user = $('<div class="pure-u-1 profileName">@'+element.displayName+'</div>');
+                    cont.append(user);
+                    adder.append(cont);
+                    $("#profileFindContainer").append(adder);
+                    adder.click(function(){
+                        var dialog = $("#profileDialog").clone();
+                        dialog.css('display','');
+                        dialog.find('.username').html(element.displayName);
+                        dialog.find(".name").html(element.name);
+                        dialog.find(".surname").html(element.surname);
+                        dialog.find(".bio").html(element.bio);
+                        if (!element.bio){
+                            dialog.find(".bio").html("No bio yet");
+                        }
+
+                        dialog.dialog({ autoOpen: false,width:600 });
+                        dialog.find(".follow-button").click(function(){
+                            $.ajax({
+                                url:"/Kwetter/api/profile/"+key+"/follow",
+                                data:{profileid:element.id},
+                                success:function(){
+                                    dialog.dialog("close");
+                                }
+                            })
+                        });
+
+                        dialog.dialog("open");
+                    });
+                });
+
+            }
+        </script>
+    </div>
+</h:body>
+
+</html>

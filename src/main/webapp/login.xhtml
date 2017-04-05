@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Daan
+  Date: 29-Mar-17
+  Time: 10:42
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous"></link>
+    <title>Welkom</title>
+</h:head>
+
+<h:body prependId="false">
+    <div class="pure-g">
+        <div class="pure-u-1-4"></div>
+        <div class="pure-u-1-2">
+            <center>
+                <h:panelGroup>
+                    <h:form prependId="false" style="max-width:500px;" class="pure-form pure-form-stacked" action="#{userBean.login}">
+                        <div class="pure-g">
+                            <div class="pure-u-1">
+                                <h:inputText id="usernameInput" value="#{userBean.username}"></h:inputText>
+                            </div>
+                            <div class="pure-u-1">
+                                <h:inputSecret id="passwordInput" value="#{userBean.password}"></h:inputSecret>
+                            </div>
+                            <div class="pure-u-1-2" style="text-align:center;">
+                                <h:commandButton class="pure-button button" value="Login" action="#{userBean.login}" />
+                            </div>
+                            <div class="pure-u-1-2" style="text-align:center;">
+                                <h:commandButton class="pure-button button" value="register" action="#{userBean.register}" />
+                            </div>
+                            <div class="pure-u-1" style="text-align:center;">
+                                <h:outputText style="color:blue;" value="#{userBean.loginResult}" />
+                            </div>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+            </center>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $("#usernameInput").attr("placeholder","Username");
+                $("#passwordInput").attr("placeholder","Password");
+            })
+        </script>
+        <div class="pure-u-1-4"></div>
+    </div>
+</h:body>
+
+</html>

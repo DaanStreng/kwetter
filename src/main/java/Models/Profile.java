@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * Created by Daan on 21-Mar-17.
@@ -11,12 +12,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQuery(name="getProfileByName",query=
 "SELECT p FROM Profile p WHERE p.displayName = :displayname"
 ),
+        @NamedQuery(name="findProfileByName",query=
+                "SELECT p FROM Profile p WHERE p.displayName LIKE :displayname"
+        ),
 @NamedQuery(name="getProfileById",query=
         "SELECT p FROM Profile p WHERE p.id = :id"
 )
 })
 @Entity
 @XmlRootElement
+
 public class Profile extends Model{
 
      @Column(nullable = false)
@@ -27,16 +32,28 @@ public class Profile extends Model{
      private String surname;
 
      @Lob
+     @JsonIgnore
      private Byte[] image;
 
      private String bio;
      private String location;
      private String website;
 
+
      @OneToOne(mappedBy = "profile")
      private User user;
 
-     @ManyToMany
+     @JsonIgnore
+    public List<Profile> getFollows() {
+        return follows;
+    }
+
+    public void setFollows(List<Profile> follows) {
+        this.follows = follows;
+    }
+
+    @JsonIgnore
+    @ManyToMany
      private List<Profile> follows;
      public void followProfile(Profile profile){
          if (follows == null)
@@ -44,6 +61,7 @@ public class Profile extends Model{
          follows.add(profile);
      }
 
+    @JsonIgnore
      @ManyToMany(mappedBy = "follows")
      private List<Profile> followedBy;
     public void addFollowedBy(Profile profile){
@@ -51,15 +69,19 @@ public class Profile extends Model{
             followedBy = new ArrayList<Profile>();
         followedBy.add(profile);
     }
+    @JsonIgnore
     public List<Profile> getFollowedBy(){
         return followedBy;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "createdBy")
     private List<Tweet> sendTweets;
 
+    @JsonIgnore
     @ManyToMany
     private List<Tweet> likes;
+
 
     @ManyToMany(mappedBy = "mentions")
     private List<Tweet> mentionedIn;

@@ -3,7 +3,9 @@ package DAO.Implementations;
 import DAO.DaoFacade;
 import DAO.Interfaces.ITweetDAO;
 import DAO.Interfaces.IUserDAO;
+import Models.Profile;
 import Models.Tweet;
+import Models.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,7 +30,9 @@ public class TweetDAO extends DaoFacade<Tweet> implements ITweetDAO {
     public EntityManager getEntityManager() {
         return em;
     }
-
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
     public List<Tweet> getTweetsBySubject(String subject){
         TypedQuery<Tweet> query
                 = em.createNamedQuery("getTweetsBySubject",Tweet.class);
@@ -41,6 +45,12 @@ public class TweetDAO extends DaoFacade<Tweet> implements ITweetDAO {
                 = em.createNamedQuery("getTweetsBySubject",Tweet.class);
         mentions ="%@"+mentions+"%";
         query.setParameter("subject",mentions);
+        return query.getResultList();
+    }
+    public List<Tweet> getTweetsByProfile(Profile profile){
+        TypedQuery<Tweet> query
+                = em.createNamedQuery("getTweetsByProfileId",Tweet.class);
+        query.setParameter("id",profile);
         return query.getResultList();
     }
 }

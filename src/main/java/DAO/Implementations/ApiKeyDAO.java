@@ -22,6 +22,9 @@ public class ApiKeyDAO extends DaoFacade<ApiKey> implements IApiKeyDAO {
     public ApiKeyDAO() {
         super(ApiKey.class);
     }
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
 
     public EntityManager getEntityManager() {
         return em;

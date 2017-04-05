@@ -6,6 +6,7 @@ import Models.User;
 import Services.ApiKeyService;
 import Services.ProfileService;
 import Services.UserService;
+import Utils.StringUtils;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -50,14 +51,8 @@ public class UserController extends Controller {
     @Path("/register")
     @Consumes("application/x-www-form-urlencoded")
     public Response register(@FormParam("username") String username,@FormParam("password") String password){
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        userService.create(user);
-        Profile profile = new Profile(user);
-        profile.setDisplayName(username);
-        profileService.create(profile);
-        userService.edit(user);
+
+        User user = userService.createUser(username,password);
         return Response.ok().entity(user).build();
     }
 
@@ -65,7 +60,8 @@ public class UserController extends Controller {
     @Path("/login")
     @Consumes("application/x-www-form-urlencoded")
     public Response login(@FormParam("username") String username,@FormParam("password") String password){
-        User user = userService.getUserDAO().loginUser(username,password);
+
+        User user = userService.loginUser(username,password);
         ApiKey key = user.generateKey();
         apiService.create(key);
         return Response.ok().entity(key).build();
@@ -89,7 +85,7 @@ public class UserController extends Controller {
     @Consumes("application/x-www-form-urlencoded")
     public Response checkApiKey(@FormParam("apikey") String apikey){
 
-        User result = userService.getUserDAO().checkApiKey(apikey);
+        User result = userService.checkApiKey(apikey);
         if (result != null)
             return Response.ok().entity(result).build();
         else return Response.ok().entity("{\"result\":\"failed\"}").build();

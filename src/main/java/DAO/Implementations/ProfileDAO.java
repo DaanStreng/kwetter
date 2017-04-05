@@ -10,6 +10,7 @@ package DAO.Implementations;
         import javax.persistence.EntityManager;
         import javax.persistence.PersistenceContext;
         import javax.persistence.TypedQuery;
+        import java.util.List;
 
 /**
  * Created by Daan on 22-Mar-17.
@@ -27,13 +28,22 @@ public class ProfileDAO extends DaoFacade<Profile> implements IProfileDAO {
     public EntityManager getEntityManager() {
         return em;
     }
-
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
     public Profile getProfileByProfileName(String profilename){
         TypedQuery<Profile> query
                 = em.createNamedQuery("getProfileByName",Profile.class);
 
         query.setParameter("displayname",profilename);
         return query.getSingleResult();
+    }
+    public List<Profile> findProfileByProfileName(String profilename){
+        TypedQuery<Profile> query
+                = em.createNamedQuery("findProfileByName",Profile.class);
+
+        query.setParameter("displayname","%"+profilename+"%");
+        return query.getResultList();
     }
     public Profile getProfileById(Long id){
         TypedQuery<Profile> query

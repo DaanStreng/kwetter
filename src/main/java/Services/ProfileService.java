@@ -11,6 +11,7 @@ import Services.Facade.ServiceFacade;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by Daan on 21-Mar-17.
@@ -27,5 +28,19 @@ public class ProfileService extends ServiceFacade<Profile> {
 
     public IProfileDAO getProfileDAO(){
         return (IProfileDAO) getDAO();
+    }
+
+    public Profile createProfile(User user){
+        Profile profile = new Profile(user);
+        profile.setDisplayName(user.getUsername());
+        this.create(profile);
+        return profile;
+    }
+    public Profile getProfileByProfileName(String name){
+        return dao.getProfileByProfileName(name);
+    }
+    public List<Profile> findProfileByProfileName(String name){return dao.findProfileByProfileName(name);}
+    public Profile getProfileById(long id){
+        return dao.getProfileById(id);
     }
 }
